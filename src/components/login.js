@@ -48,7 +48,6 @@ class LoginControl extends React.Component {
     rules(rules, word) {
         let errors = []
         for (let i = 0; i < rules.length; i++) {
-            console.log(rules[i])
             if (rules[i] == 'empty') {
                 word.length == 0 ? errors.push("Required!") : console.log("")
             }
@@ -108,7 +107,7 @@ class LoginControl extends React.Component {
                 xs={6}
                 >
                     <Paper elevation = {10} style = {paperStyle}>
-                        <Grid align = 'center' xs = {12} container rowSpacing={'1vh'}>
+                        <Grid align = 'center' container rowSpacing={'1vh'}>
                             <Grid item xs = {12}>  
                                 <img src={logo} alt="Logo" style = {imgStyle} />
                             </Grid>

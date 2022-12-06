@@ -10,13 +10,15 @@ import {
   InfoWindow,
   useLoadScript,
 } from "@react-google-maps/api";
-//import { formatRelative} from "date-fns";
 import "@reach/combobox/styles.css";
 import { Button, Icon } from '@mui/material';
 import FormDialog from './components/dialog';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import dayjs from 'dayjs';
-
+//get curr location
+//places autocomplete
+//within 5 miles
+//login/
 
 
 const libraries = ["places"]
@@ -30,6 +32,7 @@ const imgStyle = {height: '8vh', width:'8vh'}
 const options = {
   disableDefaultUI: true,
   zoomControl: true,
+  minZoom: 3
 }
 
 class App extends React.Component {
@@ -41,7 +44,6 @@ class App extends React.Component {
       this.setSelect = this.setSelected.bind(this);
       this.openDialog1 = this.openDialogWithCoords.bind(this);
       this.openDialog2 = this.openDialogWithoutCoords.bind(this);
-
       //Vars to determine if maps loaded
       this.loadError = props.loadError
       this.isLoaded = props.isLoaded
@@ -51,7 +53,8 @@ class App extends React.Component {
       this.state = {
           loggedIn: "",
           markers: [],
-          currentlySelected: null
+          currentlySelected: null,
+          center: props.center
         };
   }
 
@@ -62,7 +65,6 @@ class App extends React.Component {
   addMarker(obj){
     let currMarkers = this.state.markers
     let d = null
-    console.log(obj.date)
     obj.date == 0 ? d = dayjs(new Date()).toString() : d = obj.date.toString()
     currMarkers.push({
       lat: obj.lat,
@@ -75,7 +77,6 @@ class App extends React.Component {
   }
 
   setSelected(m){
-    console.log(m)
     this.setState({currentlySelected: m})
   }
 
@@ -87,23 +88,7 @@ class App extends React.Component {
 
     this.childDialog.current.handleClickOpen(event.latLng.lat(), event.latLng.lng());
   }
-  /*function getCurrentLoc() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          console.log(pos)
-          return pos
-        }
-      )
-    }
-    else {
-      return {lat: 47, lng: 22}
-    }
-  }*/
+
 
   render() {
     if (this.state.loggedIn != "") {
@@ -124,13 +109,13 @@ class App extends React.Component {
           <GoogleMap 
           mapContainerStyle={mapContainerStyle}
           zoom = {8}
-          center = {center}
+          center = {this.state.center}
           options = {options}
           onClick = {this.openDialogWithCoords}
           >
           {this.state.markers.map(marker => 
           <Marker 
-          key = {marker.date} 
+          key = {"" + marker.lat + "" + marker.lng} 
           position = {{lat: marker.lat, lng: marker.lng}}
           //icon
           onClick = {() => this.setSelected(marker)}
@@ -165,7 +150,8 @@ export default function(props) {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries,
   })
-
-  return <App isLoaded = {isLoaded} loadError = {loadError}/>;
+    let post = {lat: 41.517781, lng: -81.6063659}
+    
+  return <App center = {post} isLoaded = {isLoaded} loadError = {loadError}/>;
 
 }

@@ -108,14 +108,14 @@ export default class FormDialog extends React.Component{
     let perror = ""
 
     if (uerr.length > 0) {
-        uerror = <Grid item align = 'left' xs = {12}> {uerr.map(item => <Typography style = {{color: "red"}}>{item}</Typography>)}</Grid>
+        uerror = <Grid item align = 'left' xs = {12}> {uerr.map(item => <Typography key = "y" style = {{color: "red"}}>{item}</Typography>)}</Grid>
     }
     else {
         uerror = ""
     }
 
     if (perr.length > 0) {
-        perror = <Grid item align = 'left' xs = {12}> {perr.map(item => <Typography style = {{color: "red"}}>{item}</Typography>)}</Grid>
+        perror = <Grid item align = 'left' xs = {12}> {perr.map(item => <Typography key = "yo" style = {{color: "red"}}>{item}</Typography>)}</Grid>
     }
     else {
         perror = ""
