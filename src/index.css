@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: rgb(0, 140, 136);
+  z-index: 10;
+  margin: 0;
+  padding: 9;
+}
+#addplan {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  z-index: 10;
+  margin: 0;
+  padding: 10;
+  width: 4vh;
+  height: 6vh;
+}

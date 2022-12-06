@@ -8,7 +8,7 @@ class LoginControl extends React.Component {
         super(props)
         this.handleLoginClick = this.handleLogIn.bind(this);
         this.state = {
-            loggingIn: false, 
+            loggingIn: true, 
             username: "", 
             password: "",
             uerror: [],
@@ -22,20 +22,18 @@ class LoginControl extends React.Component {
 
     handleSubmit = (event) => {
         this.setState({uerror : [], perror: []})
-        console.log("gay")
         let uerr = []
         let perr = []
         let unameErrors = this.rules(['empty'], this.state.username)
         for (let i = 0; i < unameErrors.length; i++ ) {
-            console.log(unameErrors[i])
             uerr.push(unameErrors[i])
         }
         let pnameErrors = this.rules(['empty'], this.state.password)
         for (let i = 0; i < pnameErrors.length; i++ ) {
             perr.push(pnameErrors[i])
         }
-        if (uerr == [] && perr == []) {
-            this.props.onSubmit()
+        if (uerr.length == 0 && perr.length == 0) {
+            this.props.onSubmit(this.state.username)
             return
         }
         this.setState({uerror : uerr, perror: perr})
@@ -143,7 +141,7 @@ class LoginControl extends React.Component {
                                 />
                             </Grid>
                             {perror}
-                            <Grid xs = {12} item container rowSpacing = {'2vh'}>
+                            <Grid container rowSpacing = {'2vh'}>
                                 <Grid item xs = {12}>  
                                     <Button
                                     type = 'Submit'
@@ -151,15 +149,14 @@ class LoginControl extends React.Component {
                                     fullWidth
                                     variant= "contained"
                                     onClick = {this.handleSubmit}
-                                    value = {this.state.username}
                                     >
-                                        Sign In
+                                        {title}
                                     </Button>
                                 </Grid>
                                 <Grid item xs = {12} rowSpacing = {4} >  
-                                    <Typography> Don't have an account? {' '}
+                                    <Typography> {title == "Sign In" ? "Don't have an account?" : "Already have an account?"} {' '}
                                         <Link href="#" onClick={this.handleLogIn}>
-                                            {title}
+                                            {title == "Sign In" ? "Sign Up" : "Sign In"}
                                         </Link>
                                     </Typography>
                                 </Grid>
